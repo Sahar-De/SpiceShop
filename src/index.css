@@ -1,0 +1,133 @@
+@font-face {
+  font-family: farsi;
+  src: url('../src//assets/font/AGoogle.ttf');
+}
+
+@font-face {
+  font-family: farsii;
+  src: url('../src//assets/font/Mj_Meghdad_0.ttf');
+}
+
+@import 'tailwindcss';
+
+
+
+@theme {
+
+  --font-*: initial;
+  --breakpoint-*: initial;
+  --breakpoint-mobile: 26rem;
+  --breakpoint-tablet: 40rem;
+  --breakpoint-laptop: 64rem;
+  --breakpoint-desktop: 90rem;
+  --main-green: #46A358;
+  --color-mint-500: #46A358;
+  --color-dark: #3d3d3d;
+  --color-gray: #d9d9d9;
+  --color-lightgray: #fbfbfb;
+  --color-mediumgray: #A5A5A5;
+  --color-darkgray: #757575;
+  --color-customred: #e74c3c;
+  --color-menu-links: #404040;
+  --color-textbox: #fafaf9;
+  --font-farsi: farsi, sans-serif, Arial;
+  --font-farsii: farsii, sans-serif, Arial;
+
+}
+
+@utility container {
+  max-width: var(--breakpoint-desktop);
+  margin: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  @apply tablet:px-8 laptop:px-10 desktop:px-14;
+}
+
+body {
+  direction: rtl;
+}
+
+.ant-btn-variant-solid {
+  background-color: var(--color-mint-500) !important;
+}
+
+.ant-btn-variant-outlined:hover {
+  border-color: var(--color-mint-500) !important;
+  background-color: var(--color-mint-500) !important;
+  color: white !important;
+}
+
+.ant-layout {
+  background-color: white;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-mint-500);
+}
+
+.navbar a:hover {
+  color: green;
+}
+
+.navbar a.active::after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-mint-500);
+}
+
+.anticon {
+  @apply cursor-pointer hover:text-mint-500
+}
+
+.anticon svg {
+  @apply text-mint-500;
+}
+
+.actions .anticon svg {
+  @apply w-7 h-6 text-dark;
+}
+
+.ant-tabs-nav-list {
+  @apply flex gap-5 font-farsi
+}
+
+.ant-tabs-tab-btn {
+  @apply text-mint-500;
+}
+
+.ant-pagination {
+  margin-top: 40px;
+  direction: ltr;
+  color: var(--color-mint-500);
+  padding: 10px 0px;
+}
+
+.ant-pagination-item-active {
+  background-color: var(--color-mint-500) !important;
+  border-color: white !important;
+
+}
+
+.ant-pagination-item-active a {
+
+  color: white !important;
+}
+
+.mySwiper .swiper-button-next {
+  @apply bg-mint-500 w-8 h-8 rounded-full
+}
+
+.mySwiper .swiper-button-prev {
+  @apply bg-mint-500 w-8 h-8 rounded-full
+}
+
+.mySwiper .swiper-button-next:after {
+  @apply text-sm text-white
+}
+
+.mySwiper .swiper-button-prev:after {
+  @apply text-sm text-white
+}
