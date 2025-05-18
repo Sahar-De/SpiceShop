@@ -6,10 +6,12 @@ import { getProducts } from '../data/products'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProductById, selectProductById, selectProductsStatus } from '../slices/ProductSlice';
 
+
 const ProductView = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const product = useSelector((state) => selectProductById(state, id));
+  const { isLoggedIn, user } = useSelector(state => state.auth)
   const status = useSelector(selectProductsStatus);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const ProductView = () => {
           <img
             src={product.strMealThumb}
             alt={product.strMeal}
-            className="w-full max-w-md object-contain h-96 mix-blend-multiply"
+            className="w-full max-w-md object-contain h-96 mix-blend-multiply rounded-md"
           />
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-2">توضیحات محصول</h2>
@@ -82,7 +84,7 @@ const ProductView = () => {
 
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <div className="flex items-center gap-3 bg-gray-100 px-3 py-1 rounded-full">
-              <MinusCircleFilled className="text-gray-600 text-xl cursor-pointer hover:text-gray-800" />
+              <MinusCircleFilled  className="text-gray-600 text-xl cursor-pointer hover:text-gray-800" />
               <span className="text-lg font-medium">1</span>
               <PlusCircleFilled className="text-gray-600 text-xl cursor-pointer hover:text-gray-800" />
             </div>

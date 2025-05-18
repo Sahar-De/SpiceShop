@@ -1,10 +1,9 @@
 import React from 'react'
 import { DeleteOutlined, MinusCircleFilled, PlusCircleFilled, ShoppingOutlined } from '@ant-design/icons'
-import { Button, Empty, InputNumber, message, Popconfirm, Typography } from 'antd'
+import { Button, Empty, InputNumber, message, Popconfirm, Typography, Table } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItemToCart, deleteItemFromCart, removeItemFromCart } from '../slices/CartSlice'
 import { useNavigate, Link } from 'react-router-dom'
-import { getProducts } from './../data/products'
 
 const ShopingCart = () => {
   const { Title } = Typography
@@ -12,9 +11,9 @@ const ShopingCart = () => {
   const dispatch = useDispatch()
   const cartItems = useSelector((state) => state.cart.items);
 
-  
+
   // Calculate totals
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.price*item.quantity, 0)
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
   const shippingCost = totalPrice > 0 ? 20000 : 0 // example fixed shipping cost
   const discount = 0 // no discount as per user request
   const finalTotal = totalPrice + shippingCost - discount
@@ -22,12 +21,12 @@ const ShopingCart = () => {
   const handleCheckOut = () => {
     if (cartItems.length === 0) {
       message.warning("سبد خرید شما خالی است!")
-      
+
     }
     else {
       navigate('/checkout')
     }
-    
+
   }
 
   const handleQuantity = (id, type, item) => {
@@ -36,14 +35,17 @@ const ShopingCart = () => {
       case 'add':
         {
           dispatch(addItemToCart(item))
+          break;
         }
       case 'decrease':
         {
-          dispatch(deleteItemFromCart(id))
+          dispatch(removeItemFromCart(id))
+          break;
         }
       case 'delet': {
-        dispatch(removeItemFromCart(id))
+        dispatch(deleteItemFromCart(id))
         message.success('محصول از کارت حذف شد')
+        break;
       }
     }
 
@@ -52,8 +54,8 @@ const ShopingCart = () => {
   const columns = [
     {
       title: 'نام محصول',
-      dataIndex: 'name',
-      key: 'name'
+      dataIndex: 'strMeal',
+      key: 'strMeal'
     },
     {
       title: 'قیمت',
@@ -67,19 +69,24 @@ const ShopingCart = () => {
       dataIndex: 'quantity',
       key: 'quantity',
       render: (_, record) => (
-        <InputNumber
-          min={1}
-          value={record.quantity}
-          onChange={(value) => handleQuantity(record.id, value)}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <MinusCircleFilled
+            style={{ cursor: 'pointer', color: '#ff4d4f', fontSize: '18px', marginRight: 8 }}
+            onClick={() => handleQuantity(record.idMeal, 'decrease', record)}
+          />
+          <span style={{ margin: '0 8px' }}>{record.quantity}</span>
+          <PlusCircleFilled
+            style={{ cursor: 'pointer', color: '#52c41a', fontSize: '18px', marginLeft: 8 }}
+            onClick={() => handleQuantity(record.idMeal, 'add', record)}
+          />
+        </div>
       )
-
     },
     {
       title: 'جمع',
       dataIndex: 'totalPrice',
       key: 'totalPrice',
-      render: (_, record) =>`${(record.price * record.quantity).toLocaleString()} تومان`
+      render: (_, record) => `${(record.price * record.quantity).toLocaleString()} تومان`
 
     },
     {
@@ -88,14 +95,14 @@ const ShopingCart = () => {
       render: (_, record) => (
         <Popconfirm
           title="ازاین عملیات مطمئن هستید؟"
-          onConfirm={() => handleRemove(record.id)}
+          onConfirm={() => handleQuantity(record.idMeal, "delet", record)}
           okText="بله"
           cancelText="خیر"
         >
           <Button
             type='text'
             danger
-            icon={<DeleteOutlined/>}
+            icon={<DeleteOutlined />}
           >
             حذف
           </Button>
@@ -108,116 +115,54 @@ const ShopingCart = () => {
     return (
       <Empty description={<span>سبد خرید شما خالی است!!!!</span>}>
         <Link to="/shop">
-          <Button type='primary' icon={<ShoppingOutlined/>}>بازگشت به فروشگاه</Button>
+          <Button type='primary' icon={<ShoppingOutlined />}>بازگشت به فروشگاه</Button>
         </Link>
-        </Empty>
-      )
-  
-}
-  return (
-    <div className='flex flex-col laptop:flex-row py-10 gap-20 font-farsi '>
-      <table className='w-full laptop:w-1/2 table-auto tab'>
-        <thead>
-          <tr className='border-b-1 border-b-gray '>
-            <th className='pb-5'>محصول</th>
-            <th className='pb-5'>تعداد</th>
-            <th className='pb-5'>قیمت واحد</th>
-            <th className='pb-5'>قیمت کل</th>
-            <th className='pb-5'>حذف</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartItems.length === 0 ? (
-            <tr>
-              <td colSpan={5}>
-                <div className='flex justify-center'>
-                  <Title level={4}>
-                    <Link to='/shop'>
-                      سبد خرید شما خالی است <ShoppingOutlined />
-                    </Link>
-                  </Title>
-                </div>
-              </td>
-            </tr>
-          ) : (
-            cartItems.map((item) => {
-              const product = getProducts(item.id)
-              return (
-                <tr key={item.id} className='bg-lightgray my-2'>
-                  <td>
-                    <div className='flex items-center'>
-                      <img
-                        className='size-16 mix-blend-darken'
-                        src={`/images/productimages/${product.image}`}
-                        alt={product.name}
-                      />
-                      {product.name}
-                    </div>
-                  </td>
-                  <td className='text-center'>
-                    <div className='flex justify-between items-center'>
-                      <PlusCircleFilled
-                        onClick={() => (addItemToCart(product))}
-                        style={{ cursor: 'pointer' }}
-                      />
-                      <span>{item.quantity}</span>
-                      <MinusCircleFilled
-                        onClick={() => handleQuantity(item.id, 'decrease')}
-                        style={{ cursor: 'pointer' }}
-                      />
-                    </div>
-                  </td>
-                  <td className='text-center'>{product.price.toLocaleString()}</td>
-                  <td className='text-center'>{item.totalPrice.toLocaleString()}</td>
-                  <td className='text-center'>
-                    <DeleteOutlined
-                      onClick={() => handleQuantity(item.id, 'delet')}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  </td>
-                </tr>
-              )
-            })
+      </Empty>
+    )
+
+  }
+  else {
+
+    const handleRemove = (id) => {
+      dispatch(removeItemFromCart(id))
+      message.success('محصول از کارت حذف شد')
+    }
+
+    return (
+      <>
+        <Title className='font-farsi' level={3}>سبد خرید شما</Title>
+        <Table
+          columns={columns}
+          dataSource={cartItems}
+          rowKey="idMeal"
+          pagination={false}
+          summary={() => (
+            <>
+              <tr>
+                <td colSpan={3}>جمع کل</td>
+                <td>{totalPrice.toLocaleString()} تومان</td>
+              </tr>
+              <tr>
+                <td colSpan={3}>هزینه ارسال</td>
+                <td>{shippingCost.toLocaleString()} تومان</td>
+              </tr>
+              <tr>
+                <td colSpan={3}>تخفیف</td>
+                <td>{discount.toLocaleString()} تومان</td>
+              </tr>
+              <tr>
+                <td colSpan={3}>مبلغ قابل پرداخت</td>
+                <td>{finalTotal.toLocaleString()} تومان</td>
+              </tr>
+            </>
           )}
-        </tbody>
-      </table>
-      <div className='flex flex-col gap-5 w-full laptop:w-1/3 self-start'>
-        <h5 className='font-semibold'>اطلاعات خرید</h5>
-        <hr className='text-gray' />
-        <table className='w-full'>
-          <tbody>
-            <tr>
-              <td>قیمت کل:</td>
-              <td>{totalPrice.toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>تخفیف:</td>
-              <td>{discount.toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>هزینه ارسال:</td>
-              <td>{shippingCost.toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>جمع کل:</td>
-              <td>{finalTotal.toLocaleString()}</td>
-            </tr>
-          </tbody>
-        </table>
-        <Button
-          type='primary'
-          className='font-farsi!'
-          onClick={handleCheckOut}
-          disabled={cartItems.length === 0}
-        >
-          تکمیل خرید
+        />
+        <Button type="primary" onClick={handleCheckOut} style={{ marginTop: 16 }}>
+          پرداخت
         </Button>
-        <Button type='default' className='font-farsi!' onClick={() => navigate('/shop')}>
-          ادامه خرید
-        </Button>
-      </div>
-    </div>
-  )
+      </>
+    )
+  }
 }
 
 export default ShopingCart

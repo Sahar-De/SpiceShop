@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HeartOutlined, HeartFilled, SearchOutlined, MinusCircleOutlined, PlusCircleOutlined, DeleteFilled } from "@ant-design/icons";
-import { Button, Tooltip } from 'antd';
+import { Button, Tooltip, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, deleteItemFromCart, removeItemFromCart } from "../slices/CartSlice"
@@ -23,6 +23,7 @@ const MealCart = ({ product }) => {
 
     const handleAddItemToCart = () => {
         dispatch(addItemToCart(product));
+        message.success('Adding was successful');
     }
 
     const handleRemoveItemFromCart = () => {
@@ -47,7 +48,7 @@ const MealCart = ({ product }) => {
                 <img
                     src={product.strMealThumb}
                     alt={product.strMeal}
-                    className="h-full w-full aspect-square object-covar mix-blend-multiply transition-transform duration-300 hover:scale-105"
+                    className="h-full w-full rounded-t-md aspect-square object-covar mix-blend-multiply transition-transform duration-300 hover:scale-105"
                 />
 
                 {/* Quick Actions (appear on hover) */}
@@ -114,7 +115,7 @@ const MealCart = ({ product }) => {
                 {/* Add to Cart Button */}
                 {isLoggedIn && <div className='flex gap-4 items-center justify-between p-1.5 '>
                     <MinusCircleOutlined onClick={handleRemoveItemFromCart} />
-                    <Button  onClick={handleDeletItemFromCart}>حذف</Button>
+                    <Button onClick={handleDeletItemFromCart}>حذف</Button>
                     <PlusCircleOutlined onClick={handleAddItemToCart} />
                 </div>}
             </div>
