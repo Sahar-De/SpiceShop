@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Badge, Modal, Tabs } from 'antd'
-import { ShoppingCartOutlined } from '@ant-design/icons'
-import { SearchOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
-import { LoginOutlined } from '@ant-design/icons'
+import { ShoppingCartOutlined, UserOutlined, SearchOutlined, LoginOutlined } from '@ant-design/icons'
+import { Link, useNavigate } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { login, logOut } from '../slices/AuthSlice'
 import { clearCart } from '../slices/CartSlice'
@@ -20,16 +18,16 @@ const Navbar = () => {
   const userStatus = useSelector((state) => state.auth.isLoggedIn)
   const totalQuantity = useSelector((state) => state.cart.totalQuantity)
   const cartItems = useSelector((state) => state.cart.items)
-  
+
 
 
   const [showModal, setShowModal] = useState(false);
 
   const handlLogOut = () => {
-    
+
     dispatch(clearCart())
     dispatch(logOut())
-   
+
   }
 
   const handleModal = () => {
@@ -68,9 +66,9 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-light ">
           <ul className='flex gap-12 text-menu-links text-base font-normal'>
             <li><NavLink to="/">صفحه اصلی</NavLink></li>
-            <li><NavLink to="/productview">تماس با ما</NavLink></li>
-            <li><NavLink to="/shopingcart">بلاگ </NavLink></li>
-            <li><NavLink to="/checkout">درباره ما</NavLink></li>
+            <li><NavLink to="/shop">فروشگاه  </NavLink></li>
+            <li><NavLink to="/contact">تماس با ما </NavLink></li>
+            <li><NavLink to="/about">درباره ما</NavLink></li>
           </ul>
         </nav>
         <div className='actions flex gap-7 items-center'>
@@ -80,8 +78,9 @@ const Navbar = () => {
               <ShoppingCartOutlined style={{ fontSize: '24px' }} />
             </Badge>
           </NavLink>
+          {userStatus && <Link to="/dashboard"><UserOutlined /></Link>}
           {!userStatus ? <Button name='login' onClick={handleModal} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="large">ورود/عضویت</Button> :
-            <Button name='logout' onClick={() => { dispatch(logOut()); dispatch(clearCart()) }} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="large">خروج</Button>}
+            <Button name='logout' onClick={() => { handlLogOut() }} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="large">خروج</Button>}
 
 
         </div>

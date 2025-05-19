@@ -9,6 +9,11 @@ import MainPage from './components/MainPage'
 import Foooter from './components/Footer'
 import Productview from './pages/Productview'
 import ShopingCart from './pages/ShopingCart'
+import Dashboard from './pages/Dashboard'
+import CheckOut from './pages/CheckOut'
+import AboutUs from './pages/AboutUs'
+import ContactUs from './pages/ContactUs'
+
 
 const { Footer, Header, Content } = Layout
 
@@ -27,7 +32,10 @@ function App() {
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/:id" element={<Productview />} />
               <Route path="/shopingcart" element={<ShopingCart />} />
-              <Route path="/checkout" />
+              <Route path="/checkout" element={<CheckOut />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/contact" element={<ContactUs />} />
             </Routes>
           </Content>
 
