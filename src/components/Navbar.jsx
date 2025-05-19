@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { LoginOutlined } from '@ant-design/icons'
 import { NavLink } from 'react-router-dom'
 import { login, logOut } from '../slices/AuthSlice'
+import { clearCart } from '../slices/CartSlice'
 import Logo from '/images/spoon.png'
 
 
@@ -23,6 +24,13 @@ const Navbar = () => {
 
 
   const [showModal, setShowModal] = useState(false);
+
+  const handlLogOut = () => {
+    
+    dispatch(clearCart())
+    dispatch(logOut())
+   
+  }
 
   const handleModal = () => {
     setShowModal(!showModal);
@@ -73,7 +81,7 @@ const Navbar = () => {
             </Badge>
           </NavLink>
           {!userStatus ? <Button name='login' onClick={handleModal} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="large">ورود/عضویت</Button> :
-            <Button name='logout' onClick={() => { dispatch(logOut()) }} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="large">خروج</Button>}
+            <Button name='logout' onClick={() => { dispatch(logOut()); dispatch(clearCart()) }} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="large">خروج</Button>}
 
 
         </div>

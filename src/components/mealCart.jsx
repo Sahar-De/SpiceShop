@@ -10,20 +10,20 @@ const MealCart = ({ product }) => {
     const { isLoggedIn, user } = useSelector(state => state.auth)
     const [isLiked, setIsLiked] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+    const [isAddedToCart, setIsAddedToCart] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
 
-    const shoppingCart = useSelector(
-        (state) => (
-            state.cart.items
-        )
-    )
 
-    const SelectionQuantity = () => {
-        return shoppingCart.includes(product) ? product.quantity : 0;
-    }
+
+
 
     const handleAddItemToCart = () => {
         dispatch(addItemToCart(product));
-        message.success('Adding was successful');
+        setIsAddedToCart(true)
+        messageApi.open({
+            type: "success",
+            content: "محصول به سبد خرید اضافه شد"
+        })
     }
 
     const handleRemoveItemFromCart = () => {
@@ -32,6 +32,11 @@ const MealCart = ({ product }) => {
 
     const handleDeletItemFromCart = () => {
         dispatch(deleteItemFromCart(product.idMeal));
+        setIsAddedToCart(false)
+        messageApi.open({
+            type: "error",
+            content: "محصول از سبد خرید حذف شد"
+        })
     }
 
     // Format price with commas  
@@ -43,6 +48,7 @@ const MealCart = ({ product }) => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
+            {contextHolder}
             {/* Product Image */}
             <div className="relative  w-full bg-gray-100 flex items-center justify-center p-4">
                 <img
@@ -113,11 +119,32 @@ const MealCart = ({ product }) => {
                 </div>
 
                 {/* Add to Cart Button */}
-                {isLoggedIn && <div className='flex gap-4 items-center justify-between p-1.5 '>
-                    <MinusCircleOutlined onClick={handleRemoveItemFromCart} />
-                    <Button onClick={handleDeletItemFromCart}>حذف</Button>
-                    <PlusCircleOutlined onClick={handleAddItemToCart} />
-                </div>}
+                {isLoggedIn && (
+                    <div className='flex gap-4 items-center justify-between p-1.5'>
+                        {isAddedToCart ? (
+                            // Show delete button if product is in cart
+                            <>
+                                <MinusCircleOutlined onClick={handleRemoveItemFromCart} />
+                                <Button
+                                    danger
+                                    icon={<DeleteFilled />}
+                                    onClick={handleDeletItemFromCart}
+                                >
+                                    حذف از سبد خرید
+                                </Button>
+                                <PlusCircleOutlined onClick={handleAddItemToCart} />
+                            </>
+
+                        ) : (
+                            // Show add/remove controls if product isn't in cart
+                            <>
+                                <MinusCircleOutlined onClick={handleRemoveItemFromCart} />
+                                <Button onClick={handleAddItemToCart}>اضافه به سبد خرید</Button>
+                                <PlusCircleOutlined onClick={handleAddItemToCart} />
+                            </>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );

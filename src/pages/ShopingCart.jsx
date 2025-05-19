@@ -69,7 +69,7 @@ const ShopingCart = () => {
       dataIndex: 'quantity',
       key: 'quantity',
       render: (_, record) => (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
           <MinusCircleFilled
             style={{ cursor: 'pointer', color: '#ff4d4f', fontSize: '18px', marginRight: 8 }}
             onClick={() => handleQuantity(record.idMeal, 'decrease', record)}
@@ -123,11 +123,6 @@ const ShopingCart = () => {
   }
   else {
 
-    const handleRemove = (id) => {
-      dispatch(removeItemFromCart(id))
-      message.success('محصول از کارت حذف شد')
-    }
-
     return (
       <>
         <Title className='font-farsi' level={3}>سبد خرید شما</Title>
@@ -150,16 +145,19 @@ const ShopingCart = () => {
                 <td colSpan={3}>تخفیف</td>
                 <td>{discount.toLocaleString()} تومان</td>
               </tr>
-              <tr>
+              <tr className='text-mint-500 '>
                 <td colSpan={3}>مبلغ قابل پرداخت</td>
                 <td>{finalTotal.toLocaleString()} تومان</td>
               </tr>
             </>
           )}
         />
-        <Button type="primary" onClick={handleCheckOut} style={{ marginTop: 16 }}>
-          پرداخت
-        </Button>
+        <div className='flex items-center justify-start gap-3 laptop:w-1/2 pt-4'>
+          <Button type="primary" onClick={handleCheckOut}>
+            پرداخت
+          </Button>
+          <Link to="/shop">ادامه خرید</Link>
+        </div>
       </>
     )
   }
