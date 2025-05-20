@@ -126,6 +126,7 @@ const MealCart = ({ product }) => {
                             <>
                                 <MinusCircleOutlined onClick={handleRemoveItemFromCart} />
                                 <Button
+                                    className=''
                                     danger
                                     icon={<DeleteFilled />}
                                     onClick={handleDeletItemFromCart}

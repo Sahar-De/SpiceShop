@@ -11,6 +11,7 @@ import Logo from '/images/spoon.png'
 
 import SignIn from './SignIn'
 import SignUp from './SignUp'
+import MobileNavbar from './MobileNavbar'
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Navbar = () => {
 
 
   const [showModal, setShowModal] = useState(false);
+  const [showMobileNavbar, setShowMobileNavbar] = useState(false);
 
   const handlLogOut = () => {
 
@@ -88,14 +90,25 @@ const Navbar = () => {
       </div>
       <Modal open={showModal} onCancel={handleModal}>
         <Tabs centered defaultActiveKey="1" items={tabItems} />;
+
       </Modal>
 
 
-      <div className='mobileMenu flex w-full gap-1 justify-between  laptop:hidden'>
-        <input type='text' placeholder='جستجو' className="w-80 h-11 bg-textbox rounded-lg p-2 text-sm" />
-        <button className='w-11 h-11 flex items-center justify-center bg-gradient-to-br from-green-500 to-green-500 rounded-xl shadow-[0px_10px_20px_0px_rgba(70,163,88,0.30)]'>
+      <div className='mobileMenu flex items-center w-full gap-1 justify-between  laptop:hidden'>
+        <input type='text' placeholder='جستجو' className="w-52 h-11 bg-textbox rounded-lg p-2 text-sm" />
+
+        <NavLink className='relative' to="/shopingcart">
+          <Badge count={totalQuantity} size="small" offset={[-5, 5]} showZero={false}>
+            <ShoppingCartOutlined style={{ fontSize: '24px' }} />
+          </Badge>
+        </NavLink>
+        {userStatus && <Link to="/dashboard"><UserOutlined /></Link>}
+        {!userStatus ? <Button name='login' onClick={handleModal} style={{ padding: 1 }} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="small">ورود/عضویت</Button> :
+          <Button name='logout' onClick={() => { handlLogOut() }} style={{ padding: 1 }} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="small">خروج</Button>}
+        <button id='menuBtn' className='w-11 h-11 flex items-center justify-center bg-gradient-to-br from-green-500 to-green-500 rounded-xl shadow-[0px_10px_20px_0px_rgba(70,163,88,0.30)]' onClick={() => setShowMobileNavbar(!showMobileNavbar)}>
           <img src="../src/assets/mobile/filter.svg" />
         </button>
+        {showMobileNavbar && <MobileNavbar />}
       </div>
     </div>
   )
