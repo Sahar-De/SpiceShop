@@ -17,6 +17,7 @@ import {
 import { Layout, Button, Slider, Pagination } from 'antd'
 import Sort from '../components/Sort'
 import { useDispatch, useSelector } from 'react-redux'
+import Testimonials from '../components/Testimonials'
 const { Header, Content, Sider } = Layout
 
 
@@ -104,7 +105,11 @@ const Shop = () => {
 
               </ul>
             </div>
-            <img src="/images/SuperSaleBanner.png" className='mix-blend-darken ' />
+
+            <h6 className='pr-4 font-semibold py-4'>نظرات کاربران</h6>
+            <Testimonials />
+
+
 
           </div>
         </Sider>

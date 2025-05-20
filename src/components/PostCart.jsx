@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom'
 import { FireOutlined, FireFilled } from '@ant-design/icons'
 
 const PostCart = ({ post, isNew, discount }) => {
+
+
+  // Format price with commas  
+  const formattedPrice = post.price?.toLocaleString('fa-IR') + ' تومان';
+
+
   return (
     <div className='post bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full relative'>
       {/* New item badge */}
@@ -30,7 +36,7 @@ const PostCart = ({ post, isNew, discount }) => {
         <span className='text-xs text-green-600 font-medium'>{post.strCategory}</span>
         <h6 className='text-lg font-bold text-gray-800 line-clamp-2'>{post.strMeal}</h6>
         <p className='text-lg font-semibold text-gray-900'>
-          ${post.price}
+          {formattedPrice}
         </p>
 
         <Link
