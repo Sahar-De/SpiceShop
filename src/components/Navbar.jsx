@@ -94,7 +94,7 @@ const Navbar = () => {
       </Modal>
 
 
-      <div className='mobileMenu flex items-center w-full gap-1 justify-between  laptop:hidden'>
+      <div className='mobileMenu flex flex-wrap items-center w-full gap-1 justify-between  laptop:hidden'>
         <input type='text' placeholder='جستجو' className="w-48 h-11 bg-textbox rounded-lg p-2 text-sm" />
 
         <NavLink className='relative' to="/shopingcart">
