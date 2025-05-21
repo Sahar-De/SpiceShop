@@ -54,7 +54,7 @@ const Navbar = () => {
 
 
   return (
-    <div className='menuContainer  w-full pt-10 px-5 pb-4 border-b-1 border-b-mint-500/30'>
+    <div className='menuContainer font-farsi  w-full pt-10 px-5 pb-4 border-b-1 border-b-mint-500/30'>
       <div className='hidden laptop:flex desktopMenu  items-start justify-between'>
         <div className='logo '>
           {/* <img src={Logo} /> */}
