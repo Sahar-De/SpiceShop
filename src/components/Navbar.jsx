@@ -54,7 +54,7 @@ const Navbar = () => {
 
 
   return (
-    <div className='menuContainer font-farsi  w-full pt-10 px-5 pb-4 border-b-1 border-b-mint-500/30'>
+    <div className='menuContainer font-farsi  w-full pt-10 tablet:px-5 pb-4 border-b-1 border-b-mint-500/30'>
       <div className='hidden laptop:flex desktopMenu  items-start justify-between'>
         <div className='logo '>
           {/* <img src={Logo} /> */}
@@ -95,7 +95,7 @@ const Navbar = () => {
 
 
       <div className='mobileMenu flex items-center w-full gap-1 justify-between  laptop:hidden'>
-        <input type='text' placeholder='جستجو' className="w-52 h-11 bg-textbox rounded-lg p-2 text-sm" />
+        <input type='text' placeholder='جستجو' className="w-48 h-11 bg-textbox rounded-lg p-2 text-sm" />
 
         <NavLink className='relative' to="/shopingcart">
           <Badge count={totalQuantity} size="small" offset={[-5, 5]} showZero={false}>
@@ -103,8 +103,8 @@ const Navbar = () => {
           </Badge>
         </NavLink>
         {userStatus && <Link to="/dashboard"><UserOutlined /></Link>}
-        {!userStatus ? <Button name='login' onClick={handleModal} style={{ padding: 1 }} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="small">ورود/عضویت</Button> :
-          <Button name='logout' onClick={() => { handlLogOut() }} style={{ padding: 1 }} type="primary" className='bg-mint-500' icon={<LoginOutlined className='text-white' />} size="small">خروج</Button>}
+        {!userStatus ? <Button name='login' onClick={handleModal} style={{ padding: 2 }} type="primary" className='bg-mint-500' size="small">ورود/عضویت</Button> :
+          <Button name='logout' onClick={() => { handlLogOut() }} style={{ padding: 2 }} type="primary" className='bg-mint-500' size="small">خروج</Button>}
         <button id='menuBtn' className='w-11 h-11 flex items-center justify-center bg-gradient-to-br from-green-500 to-green-500 rounded-xl shadow-[0px_10px_20px_0px_rgba(70,163,88,0.30)]' onClick={() => setShowMobileNavbar(!showMobileNavbar)}>
           <img src="../src/assets/mobile/filter.svg" />
         </button>

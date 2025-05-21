@@ -33,6 +33,7 @@ const SwipSlide = ({ title, desc, discount }) => {
           pagination={{ type: "fraction" }}
           navigation={true}
           breakpoints={{
+            420: { slidesPerView: 1, spaceBetween: 20 },
             640: { slidesPerView: 1, spaceBetween: 20 },
             760: { slidesPerView: 2, spaceBetween: 10 },
             1024: { slidesPerView: 3, spaceBetween: 10 },
